@@ -5,6 +5,7 @@ import SignUp from "./Pages/SignUp/SignUp";
 import Forgotpassword from "./Pages/ForgotPassword/Forgotpassword.jsx";
 import Resetpassword from "./Pages/ResetPassword/Resetpassword.jsx";
 import HomePage from "./Pages/HomePage/HomePage.jsx";
+import Events from "./Pages/Events/Events.jsx";
 // import Manager from "./Pages/Dashboards/Manager/Manager.jsx";
 
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     path: "/home",
     element: <HomePage />
   },
+  {
+    path: "/events",
+    element: <Events />
+  }
 ]);
 function App() {
   return (
