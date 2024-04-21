@@ -6,7 +6,7 @@ import Forgotpassword from "./Pages/ForgotPassword/Forgotpassword.jsx";
 import Resetpassword from "./Pages/ResetPassword/Resetpassword.jsx";
 import HomePage from "./Pages/HomePage/HomePage.jsx";
 import Events from "./Pages/Events/Events.jsx";
-// import Manager from "./Pages/Dashboards/Manager/Manager.jsx";
+import Form from "./Components/Form/Form.jsx";
 
 
 
@@ -33,9 +33,14 @@ const router = createBrowserRouter([
     element: <HomePage />
   },
   {
-    path: "/events",
+    path: "/home/events",
     element: <Events />
-  }
+  },
+  {
+    path: "/home/events/form",
+    element: <Form />
+  },
+
 ]);
 function App() {
   return (
