@@ -28,9 +28,9 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { link: "Home", path: "home" },
-    { link: "Events", path: "events" },
-    { link: "Requests", path: "requests" },
+    { link: "Home", path: "/home" },
+    { link: "Events", path: "/events" },
+    { link: "Requests", path: "/requests" },
   ];
 
   return (

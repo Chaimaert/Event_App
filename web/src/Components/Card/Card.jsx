@@ -140,7 +140,7 @@ export default function MultiActionAreaCard() {
               </CardContent>
             </CardActionArea>
             <div className="flex items-center justify-center">
-            <Link to="/home/events/form">
+            <Link to="/form">
             <button className="px-7 py-2 bg-brandPrimary text-white rounded hover:bg-neneutralDGrey transition-all duration-100 hover:translate-x-4">
                   Organize your event
                 </button>

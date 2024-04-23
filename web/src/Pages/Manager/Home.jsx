@@ -4,6 +4,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import Search from "../../Components/SearchBar/Search";
 
 const Home = () => {
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
 

@@ -35,11 +35,11 @@ const router = createBrowserRouter([
     element: <HomePage />
   },
   {
-    path: "/home/events",
+    path: "/events",
     element: <Events />
   },
   {
-    path: "/home/events/form",
+    path: "/form",
     element: <Form />
   },
   {
