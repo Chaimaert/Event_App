@@ -7,8 +7,8 @@ const Resetpassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log('Mot de passe réinitialisé !', password);
+
+    console.log('Password reset!', password);
   };
 
   return (
@@ -16,21 +16,21 @@ const Resetpassword = () => {
       <div className="w-full flex items-center justify-center lg:w-1/2">
         <div className="bg-white px-10 py-20 rounded-3xl border-2 border-gray-100">
           <h1 className="welcome text-5xl font-semibold">
-            Réinitialisation du mot de passe
+            Reset Password
           </h1>
           <p className="font-medium text-lg text-gray-500 mt-4">
-            Veuillez entrer votre nouveau mot de passe.
+            Please enter your new password.
           </p>
           <div className="mt-8">
             <form onSubmit={handleSubmit}>
               <div>
                 <label className="text-lg font-medium" htmlFor="password">
-                  Nouveau mot de passe
+                  New Password
                 </label>
                 <input
                   type="password"
                   className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Entrez votre nouveau mot de passe"
+                  placeholder="Enter your new password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -38,12 +38,12 @@ const Resetpassword = () => {
 
               <div className="mt-6">
                 <label className="text-lg font-medium" htmlFor="confirmPassword">
-                  Confirmez le mot de passe
+                  Confirm Password
                 </label>
                 <input
                   type="password"
                   className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Confirmez votre mot de passe"
+                  placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
@@ -54,7 +54,7 @@ const Resetpassword = () => {
                   type="submit"
                   className="Signin active:scale-[.98] hover:scale-[1.01] active:duration-75 transition-all ease-in-out py-3 rounded-xl text-lg"
                 >
-                  Réinitialiser le mot de passe
+                  Reset Password
                 </button>
               </div>
             </form>
