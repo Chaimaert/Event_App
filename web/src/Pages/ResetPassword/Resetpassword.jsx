@@ -19,13 +19,13 @@ const Resetpassword = () => {
             Reset Password
           </h1>
           <p className="font-medium text-lg text-gray-500 mt-4">
-            Please enter your new password.
+            Veuillez entrer votre nouveau mot de passe.
           </p>
           <div className="mt-8">
             <form onSubmit={handleSubmit}>
               <div>
                 <label className="text-lg font-medium" htmlFor="password">
-                  New Password
+                  Nouveau mot de passe
                 </label>
                 <input
                   type="password"
@@ -38,7 +38,7 @@ const Resetpassword = () => {
 
               <div className="mt-6">
                 <label className="text-lg font-medium" htmlFor="confirmPassword">
-                  Confirm Password
+                  Confirmez le mot de passe
                 </label>
                 <input
                   type="password"
@@ -54,7 +54,7 @@ const Resetpassword = () => {
                   type="submit"
                   className="Signin active:scale-[.98] hover:scale-[1.01] active:duration-75 transition-all ease-in-out py-3 rounded-xl text-lg"
                 >
-                  Reset Password
+                  Réinitialiser le mot de passe
                 </button>
               </div>
             </form>
