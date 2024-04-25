@@ -13,13 +13,13 @@ const Login = () => {
           </p>
           <div className="mt-8">
             <div>
-              <label className="text-lg font-medium" htmlFor="username">
-                Username
+              <label className="text-lg font-medium" htmlFor="mail">
+                Mail
               </label>
               <input
-                type="text"
+                type="mail"
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter your Username"
+                placeholder="Enter your Mail"
               />
             </div>
 
