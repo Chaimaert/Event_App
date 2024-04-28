@@ -24,6 +24,6 @@ Managers can search for specific proposals based on different criteria.
 
 5. Conclusion :
    
-    --> This project streamlines the process of organizing school events by providing a user-friendly platform for submitting, reviewing, and managing event requests. It promotes 
+    -->  This project streamlines the process of organizing school events by providing a user-friendly platform for submitting, reviewing, and managing event requests. It promotes 
             transparency and efficiency within the school community by allowing clear communication and decision-making between event organizers and managers.
             The application will enhance collaboration and organization within the school environment, ultimately fostering a more seamless event planning process. 
