@@ -9,7 +9,7 @@ import Events from "./Pages/Events/Events.jsx";
 import Form from "./Components/Form/Form.jsx";
 import ManagerLogin from "./Pages/Manager/ManagerLogin.js";
 import Home from "./Pages/Manager/Home.jsx"
-
+import Requests from "./Pages/Requests/Requests.jsx";
 
 
 
@@ -37,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/events",
     element: <Events />
+  },
+  {
+    path: "/requests",
+    element: <Requests />
   },
   {
     path: "/form",
