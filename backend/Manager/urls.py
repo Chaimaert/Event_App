@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from Manager import tests
+from Manager import views
 
 
 
 urlpatterns = [
-        path('managers/',tests.Managers)
+        
 ]
