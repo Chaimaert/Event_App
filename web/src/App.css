@@ -47,6 +47,10 @@ header.sticky.border-b {
   font-family: 'Times New Roman', Times, serif;
 }
 
+.signtext {
+  color: #40916c;
+}
+
 .Signin {
   background-color: #95d5b2;
   font-style: italic;

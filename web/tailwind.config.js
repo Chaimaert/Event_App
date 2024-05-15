@@ -11,6 +11,8 @@ module.exports = {
         'neutralDGrey': '#4D4D4D',
         'brandPrimary': '#4CAF4F',
         'gray900': '#717171',
+        'search' : "#d8f3dc",
+        'serachIcon' : "#95d5b2",
       },
     },
   },

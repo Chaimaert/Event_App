@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { CardActionArea } from '@mui/material';
 import ev1 from "../../assets/ev1.jpg";
 import ev2 from "../../assets/ev2.jpg";
 import ev3 from "../../assets/ev3.jpg";
@@ -139,9 +140,11 @@ export default function MultiActionAreaCard() {
               </CardContent>
             </CardActionArea>
             <div className="flex items-center justify-center">
+            <Link to="/form">
             <button className="px-7 py-2 bg-brandPrimary text-white rounded hover:bg-neneutralDGrey transition-all duration-100 hover:translate-x-4">
                   Organize your event
                 </button>
+            </Link>
         </div>
           </Card>
         </div>

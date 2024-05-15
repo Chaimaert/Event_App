@@ -6,7 +6,9 @@ import Forgotpassword from "./Pages/ForgotPassword/Forgotpassword.jsx";
 import Resetpassword from "./Pages/ResetPassword/Resetpassword.jsx";
 import HomePage from "./Pages/HomePage/HomePage.jsx";
 import Events from "./Pages/Events/Events.jsx";
-// import Manager from "./Pages/Dashboards/Manager/Manager.jsx";
+import Form from "./Components/Form/Form.jsx";
+import ManagerLogin from "./Pages/Manager/ManagerLogin.js";
+import Home from "./Pages/Manager/Home.jsx"
 
 
 
@@ -35,7 +37,20 @@ const router = createBrowserRouter([
   {
     path: "/events",
     element: <Events />
+  },
+  {
+    path: "/form",
+    element: <Form />
+  },
+  {
+    path: "/manager/Login",
+    element: <ManagerLogin />
+  },
+  {
+    path: "/manager/home",
+    element: <Home />
   }
+
 ]);
 function App() {
   return (

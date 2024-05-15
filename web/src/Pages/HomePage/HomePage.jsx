@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import Navbar from "../../Components/Navigation/Navbar";
 import Services from "../../Components/Services/services";
 import pic4 from "../../assets/pic4.jpg";
@@ -20,9 +21,11 @@ const HomePage = () => {
                 <p className="event text-neutralGrey mb-8">
                   Where Events Come to Life with Precision
                 </p>
+                <Link to="/home/events">
                 <button className="px-7 py-2 bg-brandPrimary text-white rounded hover:bg-neneutralDGrey transition-all duration-300 hover:translate-x-4">
                   Request
                 </button>
+                </Link>
               </div>
               <div className="md:w-1/2 flex justify-end">
                 <img src={pic4} alt="Lesson" className="mt-20 w-full md:w-64 lg:w-80 h-auto rounded-lg" />

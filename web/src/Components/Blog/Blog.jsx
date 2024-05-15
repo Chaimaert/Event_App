@@ -53,7 +53,7 @@ const Blog = () => {
         </h3>
         <div className="flex items-center justify-center">
           <a
-            href="/"
+            href="/home/events"
             className="font-bold text-brandPrimary hover:text-neutral-700"
           >
             Read more
