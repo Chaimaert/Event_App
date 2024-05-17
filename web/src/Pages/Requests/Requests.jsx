@@ -99,9 +99,9 @@ const cardData = [
 
 const Requests = () => {
   return (
-    <div>
+    <div className="bg-[#d8f3dc]">
       <Navbar />
-      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto mt-40 mb-20">
+      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto mt-40 mb-20 ">
         {cardData.map((card, index) => (
           <div key={index} className="mb-8">
             <Card sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
@@ -122,7 +122,7 @@ const Requests = () => {
                 </CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '16px' }}>
                   <Link to={`/modify/${index}`}>
-                    <button className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-700 transition-all duration-100">
+                    <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-all duration-100">
                       Modify
                     </button>
                   </Link>
