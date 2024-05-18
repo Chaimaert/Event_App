@@ -8,7 +8,10 @@ import HomePage from "./Pages/HomePage/HomePage.jsx";
 import Events from "./Pages/Events/Events.jsx";
 import Form from "./Components/Form/Form.jsx";
 import ManagerLogin from "./Pages/Manager/ManagerLogin.js";
-import Home from "./Pages/Manager/Home.jsx"
+
+import Home from "./Pages/Manager/Home.jsx";
+import Requests from "./Pages/Requests/Requests.jsx";
+
 
 
 
@@ -39,6 +42,10 @@ const router = createBrowserRouter([
     element: <Events />
   },
   {
+    path: "/requests",
+    element: <Requests />
+  },
+  {
     path: "/form",
     element: <Form />
   },
@@ -52,6 +59,8 @@ const router = createBrowserRouter([
   }
 
 ]);
+
+
 function App() {
   return (
     <div>

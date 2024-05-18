@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from Organisateur import tests
+from Organisateur import views
 
 
 
 urlpatterns = [
-    path('allorg/',tests.Allorg)
+    path('allorg/',views.Allorg)
 ]

@@ -1,3 +1,4 @@
+
 from django.test import TestCase
 
 # Create your tests here.
@@ -35,5 +36,20 @@ def Inscription(request):
         return JsonResponse("Failed to Add",safe=False)
     
     
-
+"""
+    elif request.method=='PUT':
+        org_data=JSONParser().parse(request)
+        org=Organisateur.objects.get(id=id)
+        org_serializer=OrganisateurSerializer(org,data=org_data)
+        if org_serializer.is_valid():
+            org_serializer.save()
+            return JsonResponse("Updated Successfully",safe=False)
+        return JsonResponse("Failed to Update")
     
+    
+    elif request.method=='DELETE':
+        org=Organisateur.objects.get(id=id)
+        org.delete()
+        return JsonResponse("Deleted Successfully",safe=False)
+    
+"""
