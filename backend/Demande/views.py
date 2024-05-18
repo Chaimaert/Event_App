@@ -86,10 +86,16 @@ def Refus(request,id_dem):
 
 
 @csrf_exempt
-def Add(request,id_dem):
-    if request.method == 'PUT':
-        dem =get_object_or_404(Demande,id=id_dem)
-        dem.etat= Demande.Etat.REFUSE
+def Add(request):
+    if request.method == 'POST':
+        titre = request.Post()
+        description = request.Post()
+        commite = request.Post()
+        types = request.Post()
+
+        besoin = request.POST()
+
+        
         dem.save()
         return JsonResponse({'status': 'success', 'message' : 'Resued !!!'})
     else:

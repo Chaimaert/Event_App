@@ -2,9 +2,8 @@ from django.db import models
 from Organisateur.models import Organisateur
 from Manager.models import Manager
 from User.models import User
-
 from Local.models import Local
-
+import datetime
 # Create your models here.
 from django.utils.translation import gettext_lazy as _
 
@@ -54,5 +53,7 @@ class Demande(models.Model):
     description = models.CharField(max_length = 255,null=False)
     titre = models.CharField(max_length = 255,null=False)
     org = models.ForeignKey(Organisateur, on_delete=models.CASCADE,null=False,related_name='%(class)s') 
+    start_date = models.DateField(default=datetime.date.today)
+    end_date = models.DateField(default=datetime.date.today)
     man = models.ForeignKey(Manager, on_delete=models.CASCADE,null=False,related_name='%(class)s') 
     loc = models.ForeignKey(Local, on_delete=models.CASCADE,null=False,related_name='%(class)s') 
