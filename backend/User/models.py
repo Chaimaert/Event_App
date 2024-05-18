@@ -9,6 +9,7 @@ class User(models.Model):
     prenom = models.CharField(max_length = 255,null=False)
     email = models.CharField(max_length = 255,null=False)
     phone = models.CharField(max_length = 255,null=False)
+    date_naissance = models.DateTimeField(max_length = 255,null=False)
     password = models.CharField(max_length = 255,null=False)
     
  
