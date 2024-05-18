@@ -10,7 +10,6 @@ class User(models.Model):
     email = models.CharField(max_length = 255,null=False)
     phone = models.CharField(max_length = 255,null=False)
     date_naissance = models.DateTimeField(max_length = 255,null=False)
-    login = models.CharField(max_length = 255,null=False)
     password = models.CharField(max_length = 255,null=False)
     
  

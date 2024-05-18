@@ -15,29 +15,12 @@ def Managers(request):
         return JsonResponse(manager_serializer.data,safe=False)
     
     
-    
-    elif request.method=='POST':
-        manager_data=JSONParser().parse(request)
-        manager_serializer=ManagerSerializer(data=manager_data)
-        if manager_serializer.is_valid():
-            manager_serializer.save()
-            return JsonResponse("Added Successfully",safe=False)
-        return JsonResponse("Failed to Add",safe=False)
-    
+@csrf_exempt    
+def Connexion(request,email,password):
+    if request.method=='GET':
+        managers = Manager.objects.all()
+        manager = managers.get(email= email,password=password)
+        manager_serializer=ManagerSerializer(org)
+        return JsonResponse(manager_serializer.data,safe=False)
     
     
-    elif request.method=='PUT':
-        manager_data=JSONParser().parse(request)
-        manager=Manager.objects.get(id=id)
-        manager_serializer=ManagerSerializer(manager,data=manager_data)
-        if manager_serializer.is_valid():
-            manager_serializer.save()
-            return JsonResponse("Updated Successfully",safe=False)
-        return JsonResponse("Failed to Update")
-    
-    
-    
-    elif request.method=='DELETE':
-        manager=Manager.objects.get(id=id)
-        manager.delete()
-        return JsonResponse("Deleted Successfully",safe=False)
