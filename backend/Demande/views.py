@@ -55,10 +55,13 @@ def Refused(request):
             'etat': demande.etat,
             'besoin': demande.besoin, 
             'commite' : demande.commite,
+            'start_date' = demande.start_date,
+            'end_date'= demande.end_date,
             'description' : demande.description,
             'titre' : demande.titre,
             'local': local.id
         }
+        
         data.append(demande_data)
     return JsonResponse(data,safe=False)
 
@@ -84,19 +87,34 @@ def Refus(request,id_dem):
         return JsonResponse({'status': 'error', 'message' : 'Not authorized !!!'})
 
 
-
 @csrf_exempt
 def Add(request):
     if request.method == 'POST':
-        titre = request.Post()
-        description = request.Post()
-        commite = request.Post()
-        types = request.Post()
-
-        besoin = request.POST()
-
+        # Récupération des valeurs des champs du formulaire
+        titre = request.POST['titre']
+        description = request.POST['description']
+        commite = request.POST['commite']
+        types = request.POST['types']
+        start_date = request.POST['start_date']
+        end_date = request.POST['end_date']
+        besoin = request.POST['besoin']
         
+        # Création de l'instance de la demande avec les valeurs récupérées
+        dem = Demande(
+            titre=titre,
+            description=description,
+            commite=commite,
+            types=types,
+            start_date=start_date,
+            end_date=end_date,
+            besoin=besoin
+        )
+        
+        # Sauvegarde de l'instance de la demande dans la base de données
         dem.save()
-        return JsonResponse({'status': 'success', 'message' : 'Resued !!!'})
+        
+        # Renvoi d'une réponse JSON indiquant le succès de l'ajout de la demande
+        return JsonResponse({'status': 'success', 'message': 'Demande ajoutée avec succès !'})
     else:
-        return JsonResponse({'status': 'error', 'message' : 'Not authorized !!!'})
+        # Renvoi d'une réponse JSON indiquant une erreur d'autorisation pour les méthodes autres que POST
+        return JsonResponse({'status': 'error', 'message': 'Not authorized !!!'})
