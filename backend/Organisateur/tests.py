@@ -16,40 +16,18 @@ def Allorg(request):
         org_serializer=OrganisateurSerializer(org,many=True)
         return JsonResponse(org_serializer.data,safe=False)
     
-    
-    elif request.method=='POST':
-        org_data=JSONParser().parse(request)
-        org_serializer=OrganisateurSerializer(data=org_data)
-        if org_serializer.is_valid():
-            org_serializer.save()
-            return JsonResponse("Added Successfully",safe=False)
-        return JsonResponse("Failed to Add",safe=False)
-    
-    
-    elif request.method=='PUT':
-        org_data=JSONParser().parse(request)
-        org=Organisateur.objects.get(id=id)
-        org_serializer=OrganisateurSerializer(org,data=org_data)
-        if org_serializer.is_valid():
-            org_serializer.save()
-            return JsonResponse("Updated Successfully",safe=False)
-        return JsonResponse("Failed to Update")
-    
-    
-    elif request.method=='DELETE':
-        org=Organisateur.objects.get(id=id)
-        org.delete()
-        return JsonResponse("Deleted Successfully",safe=False)
 
-def Org(request,id_org):
+
+def Connexion(request,id_org):
     if request.method=='GET':
         orgs = Organisateur.objects.all()
         org = orgs.get(id= id_org)
         org_serializer=OrganisateurSerializer(org)
         return JsonResponse(org_serializer.data,safe=False)
     
-    
-    elif request.method=='POST':
+
+def Inscription(request,id_org):    
+    if request.method=='POST':
         org_data=JSONParser().parse(request)
         org_serializer=OrganisateurSerializer(data=org_data)
         if org_serializer.is_valid():
@@ -58,6 +36,7 @@ def Org(request,id_org):
         return JsonResponse("Failed to Add",safe=False)
     
     
+"""
     elif request.method=='PUT':
         org_data=JSONParser().parse(request)
         org=Organisateur.objects.get(id=id)
@@ -73,4 +52,4 @@ def Org(request,id_org):
         org.delete()
         return JsonResponse("Deleted Successfully",safe=False)
     
-
+"""
