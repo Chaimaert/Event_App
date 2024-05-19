@@ -55,8 +55,8 @@ def Refused(request):
             'etat': demande.etat,
             'besoin': demande.besoin, 
             'commite' : demande.commite,
-            'start_date' = demande.start_date,
-            'end_date'= demande.end_date,
+            'start_date' : demande.start_date,
+            'end_date': demande.end_date,
             'description' : demande.description,
             'titre' : demande.titre,
             'local': local.id
