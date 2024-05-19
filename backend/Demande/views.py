@@ -12,7 +12,7 @@ def Current(request):
     demandes_en_cours = Demande.objects.filter(etat=Demande.Etat.ENCOURS)
     data = []
     for demande in demandes_en_cours:
-        local= Local.objects.get(id= demande.id)
+        
         demande_data = {
             'id' : demande.id,
             'etat': demande.etat,
@@ -20,14 +20,15 @@ def Current(request):
             'commite' : demande.commite,
             'description' : demande.description,
             'titre' : demande.titre,
-            'local': local.nom
+            'local':  demande.local.nom
+            
         }
         data.append(demande_data)
     return JsonResponse(data,safe=False)
 
 @csrf_exempt
 def Accepted(request):
-    accepted = Demande.objects.filter(etat=Demande.Etat.ACCEPTE)
+    accepted = Demande.objects.filter(etat=Demande.Etat.ACC)
     data = []
     for demande in accepted:
         local= Local.objects.get(id= demande.id)
@@ -46,7 +47,7 @@ def Accepted(request):
 
 @csrf_exempt
 def Refused(request):
-    refused = Demande.objects.filter(etat=Demande.Etat.REFUSE)
+    refused = Demande.objects.filter(etat=Demande.Etat.REF)
     data = []
     for demande in refused :
         local= Local.objects.get(id= demande.id)
