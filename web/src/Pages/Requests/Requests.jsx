@@ -11,10 +11,10 @@ import { Link } from 'react-router-dom';
 
 const Requests = () => {
   const [requests, setRequests] = useState([]);
-
+  const userData = JSON.parse(localStorage.getItem('userData'));
   useEffect(() => {
     // Effectuez la requête HTTP pour récupérer les demandes depuis votre backend ici
-    fetch('http://127.0.0.1:8000/dem/manager/current/')
+    fetch(`http://127.0.0.1:8000/dem/org/current/?id=${userData.id}`)
       .then(response => response.json())
       .then(data => setRequests(data));
   }, []);
