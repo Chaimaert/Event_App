@@ -1,14 +1,44 @@
 import React, { useState } from 'react';
 import '../../App.css';
+import { useNavigate } from 'react-router-dom';
 
 const Resetpassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log('Password reset!', password);
+  
+    if (password && password === confirmPassword) {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const email = userData.email;
+  
+      const requestData = {
+        email: email,
+        newpassword: password,
+      };
+  
+      fetch('http://127.0.0.1:8000/org/resetpwd/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response data
+          console.log(data);
+          navigate('/');
+          // Do something with the response data
+        })
+        .catch((error) => {
+          // Handle any errors
+          alert('An error occurred while resetting the password');
+        });
+    } else {
+      alert('Please enter correctly your password');
+    }
   };
 
   return (

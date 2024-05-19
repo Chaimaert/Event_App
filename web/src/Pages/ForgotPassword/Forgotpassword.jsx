@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import '../../App.css';
 
 const Forgotpassword = () => {
   const [email, setEmail] = useState('');
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(email){
+      // Make the API request to the Connexion endpoint
+      fetch(`http://127.0.0.1:8000/org/forgotpwd/?email=${email}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response data
+          console.log(data);
+          localStorage.setItem('userData', JSON.stringify(data)); 
+          navigate('/resetpassword');
+          // Do something with the response data
+        })
+        .catch((error) => {
+          // Handle any errors
+          alert('This account doesn\'t exist');
+        });
+      }
+      else {
+        alert('Please enter your email');
+      }
 
   };
 
@@ -19,7 +38,7 @@ const Forgotpassword = () => {
             Please enter your email to reset your password.
           </p>
           <div className="mt-8">
-            <form onSubmit={handleSubmit}>
+            <form>
               <div>
                 <label className="text-lg font-medium" htmlFor="email">
                   Email
@@ -43,8 +62,8 @@ const Forgotpassword = () => {
                   </Link>
                 </div>
                 <Link
-                  to="/resetpassword"
                   className="font-medium text-base text-green-400"
+                  onClick={handleSubmit}
                 >
                   Reset Password
                 </Link>
