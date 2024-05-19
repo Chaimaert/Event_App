@@ -1,4 +1,5 @@
-from django.test import TestCase
+
+from django.shortcuts import render
 
 # Create your tests here.
 from django.views.decorators.csrf import csrf_exempt
@@ -15,8 +16,18 @@ def Allorg(request):
         org_serializer=OrganisateurSerializer(org,many=True)
         return JsonResponse(org_serializer.data,safe=False)
     
+
+@csrf_exempt
+def Connexion(request,email,password):
+    if request.method=='GET':
+        orgs = Organisateur.objects.all()
+        org = orgs.get(email= email,password=password)
+        org_serializer=OrganisateurSerializer(org)
+        return JsonResponse(org_serializer.data,safe=False)
     
-    elif request.method=='POST':
+@csrf_exempt
+def Inscription(request):    
+    if request.method=='POST':
         org_data=JSONParser().parse(request)
         org_serializer=OrganisateurSerializer(data=org_data)
         if org_serializer.is_valid():
@@ -25,6 +36,7 @@ def Allorg(request):
         return JsonResponse("Failed to Add",safe=False)
     
     
+"""
     elif request.method=='PUT':
         org_data=JSONParser().parse(request)
         org=Organisateur.objects.get(id=id)
@@ -40,3 +52,4 @@ def Allorg(request):
         org.delete()
         return JsonResponse("Deleted Successfully",safe=False)
     
+"""

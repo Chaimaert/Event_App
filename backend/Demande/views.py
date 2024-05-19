@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import JSONParser
