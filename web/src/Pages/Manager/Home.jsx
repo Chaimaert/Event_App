@@ -1,90 +1,177 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Footer from "../../Components/Footer/Footer";
+import { Card, CardActionArea, CardContent, CardMedia, Typography, Box, TextField, Button, Grid, Container } from '@mui/material';
+import { Link } from 'react-router-dom';
+import ev1 from "../../assets/ev1.jpg";
+import ev2 from "../../assets/ev2.jpg";
+import ev3 from "../../assets/ev3.jpg";
+import ev4 from "../../assets/ev4.jpg";
+import ev5 from "../../assets/ev5.jpg";
+import ev6 from "../../assets/ev6.jpg";
+import ev7 from "../../assets/ev7.avif";
+import ev8 from "../../assets/ev8.jpg";
+import ev9 from "../../assets/ev9.jpg";
+import ev10 from "../../assets/ev10.jpg";
+import ev11 from "../../assets/ev11.jpg";
+import ev12 from "../../assets/ev12.jpg";
+import ev13 from "../../assets/ev13.jpg";
+import ev14 from "../../assets/ev14.avif";
+import ev15 from "../../assets/ev15.jpg";
 import logo from "../../assets/logo.png";
-import { FaBars, FaTimes } from "react-icons/fa";
-import Search from "../../Components/SearchBar/Search";
 
-const Home = () => {
+const cardData = [
+  {
+    title: 'Open House',
+    description: 'Open House events are commonly held by educational institutions, including schools, colleges, and universities, to showcase their campus, academic programs, facilities, and student life.',
+    image: ev1,
+    status: 'pending'
+  },
+  {
+    title: 'Graduation Ceremony',
+    description: 'A Graduation Ceremony is a formal event held to commemorate and celebrate the academic achievements of students who have successfully completed their studies.',
+    image: ev2,
+    status: 'accepted'
+  },
+  {
+    title: 'Performances and Plays',
+    description: 'A Performances and Plays event is a live showcase of theatrical performances, including plays, musicals, dance shows, and other artistic presentations.',
+    image: ev3,
+    status: 'rejected'
+  },
+  // Autres données de cartes...
+];
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
+const Requests = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredCards, setFilteredCards] = useState(cardData);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setFilteredCards(cardData.filter(card => card.title.toLowerCase().includes(event.target.value.toLowerCase())));
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    setFilteredCards(cardData);
+  };
 
-    window.addEventListener("scroll", handleScroll);
+  const handleAccept = (index) => {
+    const updatedCards = [...filteredCards];
+    updatedCards[index].status = 'accepted';
+    setFilteredCards(updatedCards);
+  };
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const handleReject = (index) => {
+    const updatedCards = [...filteredCards];
+    updatedCards[index].status = 'rejected';
+    setFilteredCards(updatedCards);
+  };
 
   return (
-    <div>
-      <header
-        className={`w-full bg-white md:bg-transparent fixed top-0 left-0 right-0 ${
-          isSticky ? "sticky border" : ""
-        }`}
-      >
-        <nav className="py-4 lg:px-14 px-4 flex justify-between items-center">
-          <div className="flex items-center">
-            <a href="/" className="block">
-              <img src={logo} className="w-20 inline-block" alt="Logo" />
-            </a>
-          </div>
-
-          <div className="flex items-center">
-            {/* Mobile menu toggle button */}
-            <div className="md:hidden mr-4">
-              <button
-                onClick={toggleMenu}
-                className="text-neutralDGrey focus:outline-none focus:text-gray-500"
-              >
-                {isMenuOpen ? (
-                  <FaTimes className="h-6 w-6 text-neutralDGrey" />
-                ) : (
-                  <FaBars className="h-6 w-6" />
-                )}
-              </button>
-            </div>
-
-            <a
-              href="/"
-              className="hidden md:block text-base text-brandPrimary hover:text-gray-900 font-medium"
-            >
-              Logout
-            </a>
-
-            {/* Mobile menu  */}
-            {isMenuOpen && (
-              <div className="md:hidden absolute top-16 left-0 w-full bg-white py-4 px-4">
-                <a
-                  href="/"
-                  className="text-base text-brandPrimary hover:text-gray-900 font-medium mt-6"
-                  onClick={toggleMenu}
-                >
-                  Logout
-                </a>
-              </div>
-            )}
-          </div>
-        </nav>
-      </header>
-
-      <div className="mt-25">
-        <Search />
-      </div>
+    <div className="bg-[#d8f3dc]">
+      <Container maxWidth="lg" sx={{ padding: { xs: '16px', md: '32px' } }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '40px', marginBottom: '20px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <img src={logo} alt="Logo" style={{ marginRight: '16px' }} />
+          </Box>
+          <Box sx={{ padding: '8px 16px', borderRadius: '20px', backgroundColor: '#f1f3f5' }}>
+            <TextField
+              label="Search"
+              variant="outlined"
+              value={searchTerm}
+              onChange={handleSearch}
+              className="mb-8"
+              InputProps={{
+                endAdornment: (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {searchTerm && (
+                      <Button
+                        variant="text"
+                        color="error"
+                        onClick={handleClearSearch}
+                        sx={{ padding: '6px', minWidth: 'auto' }}
+                      >
+                        <Typography variant="body1" color="inherit">x</Typography>
+                      </Button>
+                    )}
+                    <Button
+                      variant="contained"
+                      color="success"
+                      sx={{ borderRadius: '20px', padding: '8px 16px', marginLeft: '8px' }}
+                    >
+                      Search
+                    </Button>
+                  </Box>
+                ),
+                style: {
+                  backgroundColor: '#fff',
+                  borderRadius: '20px',
+                  padding: '8px 16px',
+                  border: 'none',
+                  width: '300px',
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: '#333',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginLeft: '16px',
+                },
+              }}
+            />
+          </Box>
+        </Box>
+        <Box sx={{ marginTop: '32px' }}>
+          {filteredCards.map((card, index) => (
+            <Card key={index} sx={{ display: 'flex', marginBottom: '24px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', height: '150px' }}>
+              <CardActionArea component={Link} to={`/event/${index}`} sx={{ display: 'flex', width: '100%' }}>
+                <CardMedia
+                  component="img"
+                  image={card.image}
+                  alt={card.title}
+                  sx={{ width: '40%', objectFit: 'cover', borderRadius: '8px 0 0 8px', height: '100%' }}
+                />
+                <Box sx={{ flexGrow: 1, padding: '16px' }}>
+                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', marginBottom: '8px' }}>
+                    {card.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.primary" sx={{ marginBottom: '16px', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', display: '-webkit-box' }}>
+                    {card.description}
+                  </Typography>
+                  <Typography variant="body2" color={card.status === 'accepted' ? '#4caf50' : card.status === 'rejected' ? '#f44336' : '#9e9e9e'} sx={{ fontWeight: 'bold' }}>
+                    Status: {card.status}
+                  </Typography>
+                </Box>
+              </CardActionArea>
+              {card.status === 'pending' && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '16px', minWidth: '150px' }}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => handleAccept(index)}
+                    className="mb-2"
+                    sx={{ borderRadius: '20px', padding: '8px 16px' }}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleReject(index)}
+                    sx={{ borderRadius: '20px', padding: '8px 16px' }}
+                  >
+                    Reject
+                  </Button>
+                </Box>
+              )}
+            </Card>
+          ))}
+        </Box>
+      </Container>
+      <Footer />
     </div>
   );
 };
 
-export default Home;
+export default Requests;

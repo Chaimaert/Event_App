@@ -16,7 +16,13 @@ import Requests from "./Pages/Requests/Requests.jsx";
 
 
 
-const router = createBrowserRouter([
+
+
+
+function App() {
+  const userData = JSON.parse(localStorage.getItem('userData'));
+
+  const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />
@@ -59,9 +65,6 @@ const router = createBrowserRouter([
   }
 
 ]);
-
-
-function App() {
   return (
     <div>
       <RouterProvider router={router}>
