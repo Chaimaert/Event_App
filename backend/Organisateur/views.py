@@ -29,11 +29,16 @@ def Connexion(request,email,password):
 def Inscription(request):    
     if request.method=='POST':
         org_data=JSONParser().parse(request)
-        org_serializer=OrganisateurSerializer(data=org_data)
-        if org_serializer.is_valid():
-            org_serializer.save()
-            return JsonResponse("Added Successfully",safe=False)
-        return JsonResponse("Failed to Add",safe=False)
+        email=org_data.get('email')
+        try:
+            existing_user = Organisateur.objects.get(email=email)
+            return JsonResponse("User already exists", safe=False)
+        except User.DoesNotExist:
+            org_serializer = OrganisateurSerializer(data=org_data)
+            if org_serializer.is_valid():
+                org_serializer.save()
+                return JsonResponse("Added successfully", safe=False)
+            return JsonResponse("Failed to add", safe=False)
     
     
 """
