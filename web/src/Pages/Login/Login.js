@@ -10,7 +10,7 @@ const Login = () => {
   const handleLogin = () => {
     if(email && password){
     // Make the API request to the Connexion endpoint
-    fetch(`/org/connexion?email=${email}&password=${password}`)
+    fetch(`http://127.0.0.1:8000/org/connexion/?email=${email}&password=${password}`)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
@@ -21,7 +21,7 @@ const Login = () => {
       })
       .catch((error) => {
         // Handle any errors
-        console.error(error);
+        alert('This account doesn\'t exist');
       });
     }
     else {
