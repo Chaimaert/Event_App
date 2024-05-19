@@ -5,3 +5,5 @@ from User.models import User
 class Organisateur(User):
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='organizer_profile') 
     
+
+ 

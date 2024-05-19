@@ -9,6 +9,7 @@ urlpatterns = [
     path('accept/',views.Accepted),
     path('refus/',views.Refused),
     path('accept_dem/<int:id_dem>',views.Accept),
-    path('refus_dem/<int:id_dem>',views.Refus)
+    path('refus_dem/<int:id_dem>',views.Refus),
+    path( 'add/',views.Add)
      
 ]

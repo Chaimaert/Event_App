@@ -10,7 +10,7 @@ from Organisateur.models import Organisateur
 from User.models import User
 
 @csrf_exempt
-def Allorg(request):
+def Organisateurs(request):
     if request.method=='GET':
         org = Organisateur.objects.all()
         org_serializer=OrganisateurSerializer(org,many=True)
@@ -33,7 +33,7 @@ def Inscription(request):
         try:
             existing_user = Organisateur.objects.get(email=email)
             return JsonResponse("User already exists", safe=False)
-        except User.DoesNotExist:
+        except Organisateur.DoesNotExist:
             org_serializer = OrganisateurSerializer(data=org_data)
             if org_serializer.is_valid():
                 org_serializer.save()

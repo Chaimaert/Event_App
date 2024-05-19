@@ -5,5 +5,5 @@ from Organisateur import views
 
 
 urlpatterns = [
-    path('allorg/',views.Allorg)
+    path('allorg/',views.Organisateurs)
 ]
