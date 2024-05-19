@@ -11,48 +11,51 @@ from datetime import datetime
 
 @csrf_exempt
 def CurrentM(request):
-    demandes_en_cours = Demande.objects.filter(etat=Demande.Etat.ENCOURS)
-    data = []
-    for demande in demandes_en_cours:
-        
-        
-        demande_data = {
-            'id': demande.id,
-            'etat': demande.etat,
-            'besoin': demande.besoin,
-            'commite': demande.commite,
-            'description': demande.description,
-            'titre': demande.titre,
-            'start_date' : demande.start_date,
-            'end_date': demande.end_date,
-            #'local': demande.local.nom
-        }
-        data.append(demande_data)
-    return JsonResponse(data, safe=False)
+    if request.method=='GET':
+        demandes_en_cours = Demande.objects.filter(etat=Demande.Etat.ENCOURS)
+        data = []
+        for demande in demandes_en_cours:
+            
+            
+            demande_data = {
+                'id': demande.id,
+                'etat': demande.etat,
+                'besoin': demande.besoin,
+                'commite': demande.commite,
+                'description': demande.description,
+                'titre': demande.titre,
+                'start_date' : demande.start_date,
+                'end_date': demande.end_date,
+                #'local': demande.local.nom
+            }
+            data.append(demande_data)
+        return JsonResponse(data, safe=False)
 
 
 
 @csrf_exempt
-def CurrentO(request, email):
-    organisateur = Organisateur.objects.get(email=email)
-    demandes_en_cours = Demande.objects.filter(etat=Demande.Etat.EC, organisateur=organisateur)
-    
-    data = []
-    for demande in demandes_en_cours:
-        demande_data = {
-            'id': demande.id,
-            'etat': demande.etat,
-            'besoin': demande.besoin,
-            'commite': demande.commite,
-            'description': demande.description,
-            'titre': demande.titre,
-            'start_date' : demande.start_date,
-            'end_date': demande.end_date,
-            #'local': demande.local.nom
-        }
-        data.append(demande_data)
-    
-    return JsonResponse(data, safe=False)
+def CurrentO(request):
+    if request.method=='GET':
+
+        organisateur = Organisateur.objects.get(id=request.GET.get('id'))
+        demandes_en_cours = Demande.objects.filter(etat=Demande.Etat.ENCOURS, org=organisateur)
+        
+        data = []
+        for demande in demandes_en_cours:
+            demande_data = {
+                'id': demande.id,
+                'etat': demande.etat,
+                'besoin': demande.besoin,
+                'commite': demande.commite,
+                'description': demande.description,
+                'titre': demande.titre,
+                'start_date' : demande.start_date,
+                'end_date': demande.end_date,
+                #'local': demande.local.nom
+            }
+            data.append(demande_data)
+        
+        return JsonResponse(data, safe=False)
     
 @csrf_exempt
 def Accepted(request):
