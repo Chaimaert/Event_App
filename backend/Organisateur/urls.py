@@ -5,5 +5,7 @@ from Organisateur import views
 
 
 urlpatterns = [
-    path('allorg/',views.Allorg)
+    path('allorg/',views.Allorg),
+    path('connexion/',views.Connexion),
+    path('inscription/',views.Inscription)
 ]
