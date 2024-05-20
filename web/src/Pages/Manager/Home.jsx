@@ -5,18 +5,7 @@ import { Link } from 'react-router-dom';
 import ev1 from "../../assets/ev1.jpg";
 import ev2 from "../../assets/ev2.jpg";
 import ev3 from "../../assets/ev3.jpg";
-import ev4 from "../../assets/ev4.jpg";
-import ev5 from "../../assets/ev5.jpg";
-import ev6 from "../../assets/ev6.jpg";
-import ev7 from "../../assets/ev7.avif";
-import ev8 from "../../assets/ev8.jpg";
-import ev9 from "../../assets/ev9.jpg";
-import ev10 from "../../assets/ev10.jpg";
-import ev11 from "../../assets/ev11.jpg";
-import ev12 from "../../assets/ev12.jpg";
-import ev13 from "../../assets/ev13.jpg";
-import ev14 from "../../assets/ev14.avif";
-import ev15 from "../../assets/ev15.jpg";
+
 import logo from "../../assets/logo.png";
 
 const cardData = [
