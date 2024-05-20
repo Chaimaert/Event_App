@@ -14,7 +14,6 @@ const Requests = () => {
     // Effectuez la requête HTTP pour récupérer les demandes depuis votre backend ici
 
     fetch(`http://127.0.0.1:8000/dem/org/current/?id=${userData.id}`)
-
       .then(response => response.json())
       .then(data => setRequests(data));
   }, []);
