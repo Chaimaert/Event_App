@@ -7,6 +7,7 @@ const Requests = () => {
   const [requests, setRequests] = useState([]);
   const userData = JSON.parse(localStorage.getItem('userData'));
 
+
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/dem/org/current/?id=${userData.id}`)
       .then(response => response.json())
@@ -14,15 +15,25 @@ const Requests = () => {
   }, [userData.id]);
 
   const handleRemove = (id) => {
+
+
+    // Effectuez la requête HTTP DELETE pour supprimer la demande avec l'ID spécifié
     fetch(`http://127.0.0.1:8000/dem/org/delete/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+
     })
-    .then(response => {
-      if (response.ok) {
+      .then(response => response.json())
+      .then(data => {
+        // Mettez à jour la liste des demandes après la suppression
         setRequests(requests.filter(request => request.id !== id));
-      }
-    });
+        console.log(data); // Affichez la réponse JSON de la suppression
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
+
+
 
   return (
     <div className="bg-[#d8f3dc] min-h-screen flex flex-col">
@@ -51,14 +62,12 @@ const Requests = () => {
                       </button>
                     </Box>
                   </Box>
-                </Card>
-              </div>
-            ))
-          ) : (
-            <Typography variant="h6" color="text.primary" className="text-center">
-              No requests available
-            </Typography>
-          )}
+
+                </Box>
+              </Card>
+            </div>
+          ))}
+
         </div>
       </div>
       <Footer />

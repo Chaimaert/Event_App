@@ -13,7 +13,7 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    if (password && nom && nom && prenom && phone && email) {
+    if (password && nom && prenom && phone && email) {
       
   
       const requestData = {

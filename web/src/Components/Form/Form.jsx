@@ -15,14 +15,19 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    formData.set("titre", titre);
-    formData.set("description", description);
-    formData.set("commite", commite);
-    formData.set("types", types);
-    formData.set("start_date", start_date);
-    formData.set("end_date", end_date);
-    formData.set("besoin", besoin);
+
+    const formData = {
+      etat: "EC",
+      besoin: besoin,
+      commite: commite,
+      description: description,
+      titre: titre,
+      types: types,
+      start_date: start_date,
+      end_date: end_date
+  };
+   
+
 
     try {
       const response = await fetch('http://127.0.0.1:8000/dem/org/add/', {

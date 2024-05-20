@@ -24,6 +24,7 @@ def CurrentM(request):
                 'commite': demande.commite,
                 'description': demande.description,
                 'titre': demande.titre,
+                'types': demande.types,
                 'start_date' : demande.start_date,
                 'end_date': demande.end_date,
                 #'local': demande.local.nom
@@ -38,24 +39,11 @@ def CurrentO(request):
     if request.method=='GET':
 
         organisateur = Organisateur.objects.get(id=request.GET.get('id'))
-        demandes_en_cours = Demande.objects.filter(etat=Demande.Etat.ENCOURS, org=organisateur)
+        demandes_en_cours = Demande.objects.all()
+        demandes = demandes_en_cours.filter(etat=Demande.Etat.ENCOURS, org=organisateur)
         
-        data = []
-        for demande in demandes_en_cours:
-            demande_data = {
-                'id': demande.id,
-                'etat': demande.etat,
-                'besoin': demande.besoin,
-                'commite': demande.commite,
-                'description': demande.description,
-                'titre': demande.titre,
-                'start_date' : demande.start_date,
-                'end_date': demande.end_date,
-                #'local': demande.local.nom
-            }
-            data.append(demande_data)
-        
-        return JsonResponse(data, safe=False)
+        demande_serializer = DemandeSerializer(demandes,many=True)
+        return JsonResponse(demande_serializer.data, safe=False)
     
 @csrf_exempt
 def Accepted(request):
@@ -158,3 +146,13 @@ def Add(request):
     else:
         # Renvoi d'une réponse JSON indiquant une erreur d'autorisation pour les méthodes autres que POST
         return JsonResponse({'status': 'error', 'message': 'Not authorized !!!'})
+
+
+@csrf_exempt
+def Delete(request, id_dem):
+    if request.method == 'DELETE':
+        dem =get_object_or_404(Demande,id=id_dem)
+        dem.delete()
+        return JsonResponse({'status': 'success', 'message': 'Demande deleted!'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Not authorized!'})
