@@ -12,7 +12,7 @@ from datetime import datetime
 @csrf_exempt
 def CurrentM(request):
     if request.method=='GET':
-        demandes_en_cours = Demande.objects.filter(etat=Demande.Etat.ENCOURS)
+        demandes_en_cours = Demande.objects.all()
         data = []
         for demande in demandes_en_cours:
             
@@ -89,9 +89,10 @@ def Refused(request):
 
 
 @csrf_exempt
-def Accept(request,id_dem):
+def Accept(request):
     if request.method == 'PUT':
-        dem =get_object_or_404(Demande,id=id_dem)
+        dem_data = JSONParser().parse(request)
+        dem = Demande.objects.get(id=dem_data.get('id'))
         dem.etat= Demande.Etat.ACCEPTE
         dem.save()
         return JsonResponse({'status': 'success', 'message' : 'Accepted !!!'})
@@ -99,9 +100,10 @@ def Accept(request,id_dem):
         return JsonResponse({'status': 'error', 'message' : 'Not authorized !!!'})
 
 @csrf_exempt
-def Refus(request,id_dem):
+def Refus(request):
     if request.method == 'PUT':
-        dem =get_object_or_404(Demande,id=id_dem)
+        dem_data = JSONParser().parse(request)
+        dem = Demande.objects.get(id=dem_data.get('id'))
         dem.etat= Demande.Etat.REFUSE
         dem.save()
         return JsonResponse({'status': 'success', 'message' : 'Resued !!!'})
