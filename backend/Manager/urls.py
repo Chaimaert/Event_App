@@ -5,5 +5,6 @@ from Manager import views
 
 
 urlpatterns = [
-        path('allmgr/',views.Managers)
+        path('allmgr/',views.Managers),
+        path('connexion/',views.Connexion)
 ]
