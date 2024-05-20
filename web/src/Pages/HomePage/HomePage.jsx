@@ -22,9 +22,9 @@ const HomePage = () => {
                 <p className="event text-neutralGrey mb-8">
                   Where Events Come to Life with Precision
                 </p>
-                <Link to="/home/events">
+                <Link to="/events">
                 <button className="px-7 py-2 bg-brandPrimary text-white rounded hover:bg-neneutralDGrey transition-all duration-300 hover:translate-x-4">
-                  Request
+                  Our Events
                 </button>
                 </Link>
               </div>

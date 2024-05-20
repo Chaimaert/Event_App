@@ -37,13 +37,13 @@ class Demande(models.Model):
 
     etat = models.CharField(
         max_length=3,
-        choices=Etat,
+        choices=Etat.choices,
         default=Etat.ENCOURS,
     )
 
     types = models.CharField(
         max_length=4,
-        choices=Types,
+        choices=Types.choices,
         default=Types.CULTURAL_DAYS,
     )
     
