@@ -37,11 +37,6 @@ const Requests = () => {
                   </Typography>
                 </CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '16px' }}>
-                  <Link to={`/modify/${index}`}>
-                    <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-all duration-100">
-                      Modify
-                    </button>
-                  </Link>
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition-all duration-100 ml-4"
                   >
