@@ -35,7 +35,6 @@ class Demande(models.Model):
         
 
 
-    id = models.IntegerField(primary_key=True)
     etat = models.CharField(
         max_length=3,
         choices=Etat,
