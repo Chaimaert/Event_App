@@ -15,9 +15,9 @@ const Requests = () => {
       try {
         const response = await fetch(`http://127.0.0.1:8000/dem/manager/current/?id=${userData.id}`);
         const data = await response.json();
-        if (data.requests) {
-          setRequests(data.requests);
-          setFilteredCards(data.requests);
+        if (data) {
+          setRequests(data);
+          setFilteredCards(data);
         } else {
           setRequests([]);
           setFilteredCards([]);
@@ -33,7 +33,7 @@ const Requests = () => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    setFilteredCards(requests.filter(card => card.titre.toLowerCase().includes(event.target.value.toLowerCase())));
+    setFilteredCards(requests.filter(card => card.titre.toLowerCase().includes(event.target.value.toLowerCase()) || card.etat.toLowerCase().includes(event.target.value.toLowerCase())));
   };
 
   const handleClearSearch = () => {
@@ -41,16 +41,61 @@ const Requests = () => {
     setFilteredCards(requests);
   };
 
-  const handleAccept = (index) => {
-    const updatedCards = [...requests];
-    updatedCards[index].status = 'accepted';
-    setFilteredCards(updatedCards);
+  const handleAccept = (card,index) => {
+    fetch('http://127.0.0.1:8000/dem/manager/accept_dem/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(card),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response data
+          if(data.status === 'success'){
+            const updatedCards = [...filteredCards];
+            updatedCards[index].etat = 'ACC';
+            setFilteredCards(updatedCards);
+            
+          }
+          else {
+            alert(data.status,data.message)
+          }
+          // Do something with the response data
+        })
+        .catch((error) => {
+          // Handle any errors
+          alert('An error occurred while accepting the request');
+        });
+
+    
   };
 
-  const handleReject = (index) => {
-    const updatedCards = [...requests];
-    updatedCards[index].status = 'rejected';
-    setFilteredCards(updatedCards);
+  const handleReject = (card,index) => {
+    fetch('http://127.0.0.1:8000/dem/manager/refus_dem/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(card),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response data
+          if(data.status === 'success'){
+            const updatedCards = [...filteredCards];
+            updatedCards[index].etat = 'REF';
+            setFilteredCards(updatedCards);
+          }
+          else {
+            alert(data.status,data.message)
+          }
+          // Do something with the response data
+        })
+        .catch((error) => {
+          // Handle any errors
+          alert('An error occurred while refusing the request');
+        });
   };
 
   return (
@@ -84,14 +129,7 @@ const Requests = () => {
                       <Typography variant="body1" color="inherit">x</Typography>
                     </Button>
                   )}
-                  <Button
-                    variant="contained"
-                    color="success"
-                    onClick={() => {}}
-                    sx={{ borderRadius: '20px', padding: '8px 16px', marginLeft: '8px' }}
-                  >
-                    Search
-                  </Button>
+                  
                 </Box>
               ),
             }}
@@ -106,8 +144,8 @@ const Requests = () => {
           />
         </Box>
         <Box sx={{ marginTop: '32px', flexGrow: 1 }}>
-          {requests.length > 0 ? (
-            requests.map((card, index) => (
+          {filteredCards.length > 0 ? (
+            filteredCards.map((card, index) => (
               <Card key={index} sx={{ display: 'flex', marginBottom: '24px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', height: '150px' }}>
                 <CardActionArea component={Link} to={`/event/${index}`} sx={{ display: 'flex', width: '100%' }}>
                   <Box sx={{ flexGrow: 1, padding: '16px' }}>
@@ -117,17 +155,19 @@ const Requests = () => {
                     <Typography variant="body2" color="text.primary" sx={{ marginBottom: '16px', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', display: '-webkit-box' }}>
                       {card.description}
                     </Typography>
-                    <Typography variant="body2" color={card.status === 'accepted' ? '#4caf50' : card.status === 'rejected' ? '#f44336' : '#9e9e9e'} sx={{ fontWeight: 'bold' }}>
-                      Status: {card.status}
+                    <Typography variant="body2" color={card.etat === 'ACC' ? '#4caf50' : card.etat === 'REF' ? '#f44336' : '#9e9e9e'} sx={{ fontWeight: 'bold' }}>
+                      Status: {card.etat==='EC'?'En cours' : card.etat==='ACC'?'Accepté' : 'Refusé'}
+
+
                     </Typography>
                   </Box>
                 </CardActionArea>
-                {card.status === 'pending' && (
+                {card.etat === 'EC' && (
                   <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '16px', minWidth: '150px' }}>
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={() => handleAccept(index)}
+                      onClick={() => handleAccept(card,index)}
                       className="mb-2"
                       sx={{ borderRadius: '20px', padding: '8px 16px', marginBottom: '8px' }}
                     >
@@ -136,7 +176,7 @@ const Requests = () => {
                     <Button
                       variant="contained"
                       color="error"
-                      onClick={() => handleReject(index)}
+                      onClick={() => handleReject(card,index)}
                       sx={{ borderRadius: '20px', padding: '8px 16px' }}
                     >
                       Reject
