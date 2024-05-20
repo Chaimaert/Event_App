@@ -12,15 +12,13 @@ const Requests = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCards, setFilteredCards] = useState([]);
   const [requests,setRequests]= useState([]);
-
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   useEffect(() => {
-    // Faire la requête pour récupérer les données des cartes
-    // Assurez-vous de mettre à jour les états de filteredCards et requests avec les données récupérées
-    // Exemple de code fictif pour une requête
+
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/dem/manager/current/`);
+        const response = await fetch(`http://127.0.0.1:8000/dem/manager/current/?id=${userData.id}`);
         const data = await response.json();
         setFilteredCards(data.filteredCards);
         setRequests(data.requests);
@@ -111,7 +109,7 @@ const Requests = () => {
           </Box>
         </Box>
         <Box sx={{ marginTop: '32px' }}>
-          {filteredCards.map((card, index) => (
+          {requests && requests.map((card, index) => (
             <Card key={index} sx={{ display: 'flex', marginBottom: '24px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', height: '150px' }}>
               <CardActionArea component={Link} to={`/event/${index}`} sx={{ display: 'flex', width: '100%' }}>
                 
