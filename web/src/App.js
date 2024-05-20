@@ -60,7 +60,7 @@ function App() {
     element: <ManagerLogin />
   },
   {
-    path: "/manager/home",
+    path: "/manager/requests",
     element: <Home />
   }
 
