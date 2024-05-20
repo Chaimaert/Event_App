@@ -15,7 +15,7 @@ const ManagerLogin = () => {
         // Handle the response data
         console.log(data);
         localStorage.setItem('userData', JSON.stringify(data)); 
-        navigate('/manager/home');
+        navigate('/manager/requests');
         // Do something with the response data
       })
       .catch((error) => {
