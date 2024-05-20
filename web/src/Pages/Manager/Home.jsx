@@ -1,57 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../../Components/Footer/Footer";
-import { Card, CardActionArea, CardContent, CardMedia, Typography, Box, TextField, Button, Grid, Container } from '@mui/material';
+import { Card, CardActionArea, Typography, Box, TextField, Button, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
-import ev1 from "../../assets/ev1.jpg";
-import ev2 from "../../assets/ev2.jpg";
-import ev3 from "../../assets/ev3.jpg";
+
 
 import logo from "../../assets/logo.png";
 
-const cardData = [
-  {
-    title: 'Open House',
-    description: 'Open House events are commonly held by educational institutions, including schools, colleges, and universities, to showcase their campus, academic programs, facilities, and student life.',
-    image: ev1,
-    status: 'pending'
-  },
-  {
-    title: 'Graduation Ceremony',
-    description: 'A Graduation Ceremony is a formal event held to commemorate and celebrate the academic achievements of students who have successfully completed their studies.',
-    image: ev2,
-    status: 'accepted'
-  },
-  {
-    title: 'Performances and Plays',
-    description: 'A Performances and Plays event is a live showcase of theatrical performances, including plays, musicals, dance shows, and other artistic presentations.',
-    image: ev3,
-    status: 'rejected'
-  },
-  // Autres données de cartes...
-];
+
 
 const Requests = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredCards, setFilteredCards] = useState(cardData);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [requests,setRequests]= useState([]);
+
+
+  useEffect(() => {
+    // Faire la requête pour récupérer les données des cartes
+    // Assurez-vous de mettre à jour les états de filteredCards et requests avec les données récupérées
+    // Exemple de code fictif pour une requête
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/dem/manager/current/`);
+        const data = await response.json();
+        setFilteredCards(data.filteredCards);
+        setRequests(data.requests);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    setFilteredCards(cardData.filter(card => card.title.toLowerCase().includes(event.target.value.toLowerCase())));
+    setFilteredCards(requests.filter(card => card.titre.toLowerCase().includes(event.target.value.toLowerCase())));
   };
 
   const handleClearSearch = () => {
     setSearchTerm('');
-    setFilteredCards(cardData);
+    setFilteredCards(requests);
   };
 
   const handleAccept = (index) => {
-    const updatedCards = [...filteredCards];
+    const updatedCards = [...requests];
     updatedCards[index].status = 'accepted';
     setFilteredCards(updatedCards);
   };
 
   const handleReject = (index) => {
-    const updatedCards = [...filteredCards];
+    const updatedCards = [...requests];
     updatedCards[index].status = 'rejected';
     setFilteredCards(updatedCards);
   };
@@ -115,15 +114,10 @@ const Requests = () => {
           {filteredCards.map((card, index) => (
             <Card key={index} sx={{ display: 'flex', marginBottom: '24px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', height: '150px' }}>
               <CardActionArea component={Link} to={`/event/${index}`} sx={{ display: 'flex', width: '100%' }}>
-                <CardMedia
-                  component="img"
-                  image={card.image}
-                  alt={card.title}
-                  sx={{ width: '40%', objectFit: 'cover', borderRadius: '8px 0 0 8px', height: '100%' }}
-                />
+                
                 <Box sx={{ flexGrow: 1, padding: '16px' }}>
                   <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', marginBottom: '8px' }}>
-                    {card.title}
+                    {card.titre}
                   </Typography>
                   <Typography variant="body2" color="text.primary" sx={{ marginBottom: '16px', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', display: '-webkit-box' }}>
                     {card.description}
