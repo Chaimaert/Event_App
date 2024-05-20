@@ -12,11 +12,8 @@ const Requests = () => {
   const userData = JSON.parse(localStorage.getItem('userData'));
   useEffect(() => {
     // Effectuez la requête HTTP pour récupérer les demandes depuis votre backend ici
-<<<<<<< HEAD
-    fetch('http://127.0.0.1:8000/dem/org/current/')
-=======
+
     fetch(`http://127.0.0.1:8000/dem/org/current/?id=${userData.id}`)
->>>>>>> 3a43a8227148d94399b981f934db9dd78f35804f
       .then(response => response.json())
       .then(data => setRequests(data));
   }, []);
