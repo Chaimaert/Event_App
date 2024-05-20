@@ -54,7 +54,7 @@ const Requests = () => {
   };
 
   return (
-    <div>
+    <div className="bg-[#f0fff1] min-h-screen flex flex-col">
       <header style={{ backgroundColor: '#ffffff', padding: '20px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginBottom: '20px' }}>
         <Container maxWidth="lg" sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -64,7 +64,7 @@ const Requests = () => {
         </Container>
       </header>
       
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ flexGrow: 1 }}>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
           <TextField
             label="Search"
@@ -129,7 +129,7 @@ const Requests = () => {
                       color="success"
                       onClick={() => handleAccept(index)}
                       className="mb-2"
-                      sx={{ borderRadius: '20px', padding: '8px 16px' }}
+                      sx={{ borderRadius: '20px', padding: '8px 16px', marginBottom: '8px' }}
                     >
                       Accept
                     </Button>
