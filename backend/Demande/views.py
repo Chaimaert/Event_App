@@ -8,29 +8,16 @@ from Demande.models import Demande
 from Local.models import Local
 from .models import Organisateur
 from datetime import datetime
+from django.core.mail import send_mail
+from Organisateur.models import Organisateur
 
 @csrf_exempt
 def CurrentM(request):
     if request.method=='GET':
-        demandes_en_cours = Demande.objects.all()
-        data = []
-        for demande in demandes_en_cours:
-            
-            
-            demande_data = {
-                'id': demande.id,
-                'etat': demande.etat,
-                'besoin': demande.besoin,
-                'commite': demande.commite,
-                'description': demande.description,
-                'titre': demande.titre,
-                'types': demande.types,
-                'start_date' : demande.start_date,
-                'end_date': demande.end_date,
-                #'local': demande.local.nom
-            }
-            data.append(demande_data)
-        return JsonResponse(data, safe=False)
+        demandes = Demande.objects.all()
+        
+        demande_serializer = DemandeSerializer(demandes,many=True)
+        return JsonResponse(demande_serializer.data, safe=False)
 
 
 
@@ -95,6 +82,17 @@ def Accept(request):
         dem = Demande.objects.get(id=dem_data.get('id'))
         dem.etat= Demande.Etat.ACCEPTE
         dem.save()
+        org = Organisateur.objects.get(id=dem_data.get('org'))
+        
+        send_mail(
+            'Result of your Request',
+            f'Hello {org.nom}, \nWe are Happy to inform you that your request has been accepted.',
+            'moroccopalace2023@gmail.com',
+            [org.email],
+            fail_silently=False,
+        )
+    
+            
         return JsonResponse({'status': 'success', 'message' : 'Accepted !!!'})
     else:
         return JsonResponse({'status': 'error', 'message' : 'Not authorized !!!'})
@@ -106,6 +104,16 @@ def Refus(request):
         dem = Demande.objects.get(id=dem_data.get('id'))
         dem.etat= Demande.Etat.REFUSE
         dem.save()
+        org = Organisateur.objects.get(id=dem_data.get('org'))
+        
+        send_mail(
+            'Result of your Request',
+            f'Hello {org.nom}, \nWe regret to inform you that your request has been refused.',
+            'moroccopalace2023@gmail.com',
+            [org.email],
+            fail_silently=False,
+        )
+    
         return JsonResponse({'status': 'success', 'message' : 'Resued !!!'})
     else:
         return JsonResponse({'status': 'error', 'message' : 'Not authorized !!!'})
