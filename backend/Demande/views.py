@@ -10,6 +10,8 @@ from .models import Organisateur
 from datetime import datetime
 from django.core.mail import send_mail
 from Organisateur.models import Organisateur
+from Manager.models import Manager
+from Local.models import Local
 
 @csrf_exempt
 def CurrentM(request):
@@ -121,42 +123,42 @@ def Refus(request):
 @csrf_exempt
 def Add(request):
     if request.method == 'POST':
-        if 'titre' in request.POST and 'description' in request.POST and 'commite' in request.POST and 'types' in request.POST and 'start_date' in request.POST and 'end_date' in request.POST and 'besoin' in request.POST:
-            # Récupération des valeurs des champs
-            titre = request.POST.get('titre')
-            description = request.POST.get('description')
-            commite = request.POST.get('commite')
-            types = request.POST.get('types')
-            start_date = datetime.strptime(request.POST.get('start_date'), '%Y-%m-%d')
-            end_date = datetime.strptime(request.POST.get('end_date'), '%Y-%m-%d')
-            besoin = request.POST.get('besoin')
-            
-            # Création de l'instance de la demande avec les valeurs récupérées
-            dem = Demande(
-                titre=titre,
-                description=description,
-                commite=commite,
-                types=types,
-                start_date=start_date,
-                end_date=end_date,
-                besoin=besoin
-            )
-            
-            # Définition de l'état par défaut
-            dem.etat = "EC"
-            
-            # Sauvegarde de l'instance de la demande dans la base de données
-            dem.save()
-            
-            # Renvoi d'une réponse JSON indiquant le succès de l'ajout de la demande
-            return JsonResponse({'status': 'success', 'message': 'Demande ajoutée avec succès !'})
-        else:
-            # Renvoi d'une réponse JSON indiquant les champs manquants dans la requête
-            return JsonResponse({'status': 'error', 'message': 'Certains champs sont manquants dans la requête.'})
+        # Récupération des valeurs des champs
+        dem_data = JSONParser().parse(request)
+
+        # Retrieve the Organisateur instance
+        org_id = dem_data.get('org')
+        org = Organisateur.objects.get(id=org_id)
+
+        man_id = dem_data.get('man')
+        man = Manager.objects.get(id=man_id)
+
+        loc_id = dem_data.get('loc')
+        loc = Local.objects.get(id=loc_id)
+        # Création de l'instance de la demande avec les valeurs récupérées
+        dem = Demande(
+            etat=Demande.Etat.ENCOURS,
+            types=dem_data.get('types'),
+            besoin=dem_data.get('besoin'),
+            commite=dem_data.get('commite'),
+            description=dem_data.get('description'),
+            titre=dem_data.get('titre'),
+            org=org,
+            start_date=dem_data.get('start_date'),
+            end_date=dem_data.get('end_date'),
+            man=man,
+            loc=loc
+        )
+
+        # Sauvegarde de l'instance de la demande dans la base de données
+        dem.save()
+
+        # Renvoi d'une réponse JSON indiquant le succès de l'ajout de la demande
+        return JsonResponse({'status': 'success', 'message': 'Demande ajoutée avec succès !'})
+
     else:
         # Renvoi d'une réponse JSON indiquant une erreur d'autorisation pour les méthodes autres que POST
         return JsonResponse({'status': 'error', 'message': 'Not authorized !!!'})
-
 
 @csrf_exempt
 def Delete(request, id_dem):
