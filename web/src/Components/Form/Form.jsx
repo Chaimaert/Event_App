@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo.png";
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
   const [titre, setTitre] = useState("");
@@ -9,43 +10,70 @@ const Form = () => {
   const [start_date, setStartdate] = useState("");
   const [end_date, setEnddate] = useState("");
   const [besoin, setBesoin] = useState("");
+  const navigate = useNavigate();
 
+  const options = [
+    { value: 'OH', label: "Open House" },
+    { value: 'PP', label: "Performances and Plays" },
+    { value: 'CD', label: "Cultural Days" },
+    { value: 'CF', label: "Career Fairs" },
+    { value: 'ScD', label: "Science Day" },
+    { value: 'ACC', label: "Academic Competitions" },
+    { value: 'SC', label: "School Carnival" },
+    { value: 'AW', label: "Awareness Week" },
+    { value: 'EFT', label: "Educational Field Trips" },
+    { value: 'SF', label: "School Festival" },
+    { value: 'BW', label: "Book Week" },
+    { value: 'SpD', label: "Sports Day" },
+    { value: 'TW', label: "Talent Week" },
+    { value: 'AWC', label: "Awareness Campaigns" },
+    { value: 'GC', label: "Graduation Ceremony" },
+  ];
   // Obtenir la date actuelle
   const today = new Date().toISOString().split("T")[0];
-
+  const userData = JSON.parse(localStorage.getItem('userData'));
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = {
-      etat: "EC",
-      besoin: besoin,
-      commite: commite,
-      description: description,
-      titre: titre,
-      types: types,
-      start_date: start_date,
-      end_date: end_date
-  };
+    if(types && besoin && commite && description && titre && start_date && end_date){
+      const formData = {
+        etat: "EC",
+        types: types,
+        besoin: besoin,
+        commite: commite,
+        description: description,
+        titre: titre,
+        start_date: start_date,
+        end_date: end_date,
+        org: userData.id,
+        man: 1,
+        loc: 1
+      };
    
-
-
-    try {
-      const response = await fetch('http://127.0.0.1:8000/dem/org/add/', {
+      fetch('http://127.0.0.1:8000/dem/org/add/', {
         method: 'POST',
-        body: formData
-      });
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response data
+          if(data.status === 'success'){
+            console.log(data);
+            navigate('/home');
+          }
+          else alert(data);
+          // Do something with the response data
+        })
+        .catch((error) => {
+          // Handle any errors
+          alert('An error occurred while saving the request');
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        // Traitez la réponse du backend ici
-      } else {
-        throw new Error('Request failed');
-      }
-    } catch (error) {
-      console.error(error);
-      // Gérez les erreurs ici
+
     }
+    else{ alert('insert all uor data !!')}
   };
 
   return (
@@ -115,17 +143,23 @@ const Form = () => {
             <label className="text-lg font-medium" htmlFor="event_type">
               Event Type
             </label>
-            <input
-              type="text"
-              id="event_type"
-              name="event_type"
-              value={types}
-              onChange={(e) => setType(e.target.value)}
-              className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1"
+            <select
+          id="event_type"
+          name="event_type"
+            value={types}
+            onChange={(e) => setType(e.target.value)}
+            className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1"
               placeholder="Enter Event Type"
-              required
-            />
+          >
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
           </div>
+
+          
 
           <div className="mt-6 grid grid-cols-2 gap-4">
             <div>
